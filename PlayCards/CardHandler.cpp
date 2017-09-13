@@ -24,6 +24,10 @@ void CCardHandler::Init()
 		CCard* pCard = new CCard(i);
 		m_vecAllCards.push_back(*pCard);
 	}
+	for (INT32 i = 0; i < 3; ++i)
+	{
+		m_vecPlayer.push_back(*(new CCardPlayer(i)));
+	}
 }
 
 void CCardHandler::ShuffleCard(INT32 nCount /*= 100*/)
@@ -41,20 +45,25 @@ void CCardHandler::BeginGame()
 	PrintCard(m_vecAllCards);
 	ShuffleCard();
 	PrintCard(m_vecAllCards);
+
 	//·¢ÅÆ
+	list<CCard>& listPlayer0 = m_vecPlayer[0].GetCardList();
+	list<CCard>& listPlayer1 = m_vecPlayer[1].GetCardList();
+	list<CCard>& listPlayer2 = m_vecPlayer[2].GetCardList();
+
 	for (size_t i = 0; i <= 48;)
 	{
-		m_listPlayer[0].push_back(m_vecAllCards[i]);
-		m_listPlayer[1].push_back(m_vecAllCards[i + 1]);
-		m_listPlayer[2].push_back(m_vecAllCards[i + 2]);
+		listPlayer0.push_back(m_vecAllCards[i]);
+		listPlayer1.push_back(m_vecAllCards[i + 1]);
+		listPlayer2.push_back(m_vecAllCards[i + 2]);
 		i += 3;
 	}
-	m_listPlayer[0].sort(Cmpare());
-	m_listPlayer[1].sort(Cmpare());
-	m_listPlayer[2].sort(Cmpare());
-	PrintCard(m_listPlayer[0]);
-	PrintCard(m_listPlayer[1]);
-	PrintCard(m_listPlayer[2]);
+	listPlayer0.sort(Cmpare());
+	listPlayer1.sort(Cmpare());
+	listPlayer2.sort(Cmpare());
+	PrintCard(m_vecPlayer[0].GetCardList());
+	PrintCard(m_vecPlayer[1].GetCardList());
+	PrintCard(m_vecPlayer[2].GetCardList());
 }
 
 void CCardHandler::PrintCard(vector<CCard>& vecCards)

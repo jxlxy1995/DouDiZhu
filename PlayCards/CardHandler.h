@@ -5,6 +5,21 @@
 #include <vector>
 #include <list>
 
+class CCardPlayer
+{
+public:
+	CCardPlayer(INT8 cIndex) :m_cIndex(cIndex), m_nScore(0){}
+
+	list<CCard>& GetCardList(){ return m_listCard; }
+	INT8 GetIndex(){ return m_cIndex; }
+
+private:
+	list<CCard> m_listCard;
+	INT8 m_cIndex;
+	INT8 m_cDizhuIndex;
+	INT32 m_nScore;
+};
+
 class CCardHandler
 {
 public:
@@ -27,10 +42,10 @@ private:
 
 private:
 	vector<CCard> m_vecAllCards;
-	list<CCard> m_listPlayer[3];
-	INT8 m_cDizhuIndex;
+	vector<CCardPlayer> m_vecPlayer;
 
 	vector<string> m_vecPointName;
+	INT8 m_cDizhuIndex;
 };
 
 #endif
