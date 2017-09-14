@@ -1,8 +1,8 @@
 #ifndef __Card_h__
 #define __Card_h__
 
-#include "CardType.h"
 #include <string>
+#include "CardType.h"
 
 class CCard
 {
