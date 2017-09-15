@@ -8,11 +8,14 @@
 class CCardPlayer
 {
 public:
-	CCardPlayer(INT8 cIndex) :m_cIndex(cIndex), m_nScore(0),m_nZhadanCount(0), m_nHuojianCount(0){}
+	CCardPlayer(INT8 cIndex) :m_cIndex(cIndex), m_nScore(0), m_nZhadanCount(0), m_nHuojianCount(0), m_bWin(false){}
 
 	list<CCard>& GetCardList(){ return m_listCard; }
 	INT8 GetIndex(){ return m_cIndex; }
-	void AutoPlay(SCardComb& stLastComb);
+	bool AutoPlay(SCardComb& stLastComb);
+	bool ClearOutCard(vector<CCard> vecOutCards);
+	bool IsWin(){ return m_bWin; }
+	void ChooseCard(INT8 cCount, INT32 nTargetGrade, vector<CCard>& vecChooseCard);
 
 private:
 	list<CCard> m_listCard;
@@ -23,6 +26,7 @@ private:
 
 	INT32 m_nZhadanCount;
 	INT32 m_nHuojianCount;
+	bool m_bWin;
 };
 
 class CCardHandler
@@ -42,6 +46,10 @@ public:
 	void PrintCard(vector<CCard>& vecCards);
 	void PrintCard(list<CCard>& listCards);
 	INT8 DealComb(SCardComb& stCardComb);
+	CCardPlayer* GetPlayer(INT32 nIndex);
+	SCardComb& GetLastComb(){ return m_stLastComb; }
+	void SetLastIndex(INT8 cIndex){ m_cLastIndex = cIndex; }
+	INT8 GetLastIndex(){ return m_cLastIndex; }
 
 	void OnRecvComb(INT8 cIndex, vector<CCard> listCards);
 
@@ -55,6 +63,7 @@ private:
 	vector<string> m_vecPointName;
 	INT8 m_cDizhuIndex;
 
+	INT8 m_cLastIndex;
 	SCardComb m_stLastComb;
 };
 

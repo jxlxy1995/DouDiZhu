@@ -7,6 +7,8 @@
 
 using namespace std;
 
+#define	ZHADAN_CONDITION 10
+
 class CCard;
 
 enum ECardType

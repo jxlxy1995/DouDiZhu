@@ -10,6 +10,7 @@ public:
 	CCard(INT32 nID);
 	~CCard(){}
 
+	INT32 GetCardID(){ return m_nID; }
 	INT32 GetCardType(){ return m_nType; }
 	INT32 GetCardPoint(){ return m_nPoint; }
 	INT32 GetCardGrade(){ return m_nGrade; }
