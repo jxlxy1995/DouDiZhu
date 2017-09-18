@@ -28,15 +28,18 @@ void CCardHandler::Init()
 	{
 		m_vecPlayer.push_back(*(new CCardPlayer(i)));
 	}
+
+	//Init
 	m_cLastIndex = 0;
+	m_nScoreMultiple = 1;
 }
 
 void CCardHandler::ShuffleCard(INT32 nCount /*= 100*/)
 {
-	//UINT32 dwSeed = chrono::system_clock::now().time_since_epoch().count();
 	for (INT32 i = 0; i < nCount; ++i)
 	{
-		random_shuffle(m_vecAllCards.begin(), m_vecAllCards.end());
+		UINT32 dwSeed = chrono::system_clock::now().time_since_epoch().count();
+		shuffle(m_vecAllCards.begin(), m_vecAllCards.end(), default_random_engine(dwSeed));
 	}
 }
 
@@ -115,6 +118,11 @@ void CCardHandler::OnRecvComb(INT8 cIndex, vector<CCard> vecCards)
 		char szOutput[64];
 		sprintf_s(szOutput, "Coombo:%d", cRet);
 		CLogHandler::Instance()->WriteLine(szOutput);
+
+		if (COMB_TYPE_ZHADAN == cRet || COMB_TYPE_HUOJIAN == cRet)
+		{
+			m_nScoreMultiple *= 2;
+		}
 
 		m_cLastIndex = cIndex;
 		m_stLastComb = stCardComb;
@@ -528,11 +536,11 @@ bool CCardPlayer::AutoPlay(SCardComb& m_stLastComb)
 			return true;
 		}
 		//3dai
-		for (INT32 i = 1; i <= 11; ++i)
+		for (INT32 i = 1; i <= 13; ++i)
 		{
 			if (3 == szSame[i])
 			{
-				for (INT32 j = 1; j <= 11; ++j)
+				for (INT32 j = 1; j <= 13; ++j)
 				{
 					//dai k
 					for (INT32 k = 2; k >= 0; --k)
@@ -715,7 +723,7 @@ bool CCardPlayer::AutoPlay(SCardComb& m_stLastComb)
 			{
 				if (3 == szSame[i] && i > m_stLastComb.cMaxPoint)
 				{
-					for (INT32 j = 1; j <= 13; ++i)
+					for (INT32 j = 1; j <= 13; ++j)
 					{
 						if (j == i)
 						{
@@ -743,7 +751,7 @@ bool CCardPlayer::AutoPlay(SCardComb& m_stLastComb)
 			{
 				if (3 == szSame[i] && i > m_stLastComb.cMaxPoint)
 				{
-					for (INT32 j = 1; j <= 13; ++i)
+					for (INT32 j = 1; j <= 13; ++j)
 					{
 						if (j == i)
 						{

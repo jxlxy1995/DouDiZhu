@@ -42,6 +42,10 @@ void main()
 				{
 					++cLoop;
 				}
+				else
+				{
+					cLoop = 0;
+				}
 				stLastComb = CCardHandler::Instance()->GetLastComb();
 				bIsEnd = pPlayer->IsWin();
 				i = (i + 1) % 3;

@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <WinBase.h>
 #include <ctime>
+#include <time.h>
+#include <stdlib.h>
 
 void CLogHandler::Init()
 {
@@ -11,9 +13,9 @@ void CLogHandler::Init()
 void CLogHandler::CreateNewFile()
 {
 	string strFileName = "GameLog";
-	INT64 llTime = GetTickCount();
+	time_t llCurTime = time(NULL);
 	char cTime[64];
-	sprintf_s(cTime, "%lld.txt", llTime);
+	sprintf_s(cTime, "%lld.txt", llCurTime);
 	strFileName += cTime;
 	m_obOutfile.open(strFileName.c_str());
 	m_bFileReady = true;

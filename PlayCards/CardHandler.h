@@ -65,6 +65,7 @@ private:
 
 	INT8 m_cLastIndex;
 	SCardComb m_stLastComb;
+	INT32 m_nScoreMultiple;
 };
 
 #endif
